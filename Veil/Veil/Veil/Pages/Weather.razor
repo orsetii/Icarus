@@ -1,0 +1,29 @@
+﻿@page "/weather"
+@inject IJSRuntime JS
+
+<PageTitle>Veil | Weather</PageTitle>
+
+<MudTextField @bind-Value="Latitude" Label="Standard" Variant="Variant.Text" id="latitudeText"></MudTextField>
+<MudTextField @bind-Value="Longitude" Label="Standard" Variant="Variant.Text" id="longitudeText"></MudTextField>
+
+
+<div id="demo"></div>
+
+ <div id="map"></div>
+
+
+
+@code {
+    public double Latitude { get; set; } = 0.0;
+    public double Longitude { get; set; } = 0.0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)    {
+        await JS.InvokeVoidAsync("InitMap");
+    }
+
+    async void ButtonOnClick()
+    {
+        var forecast = await Services.Weather.GetTodaysWeather(Latitude, Longitude);
+    }
+}
+

@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veil", "Veil\Veil.csproj", "{583D5336-940C-4467-86CA-CDF93E93792A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyApis", "ThirdPartyApis\ThirdPartyApis.csproj", "{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veil.Services", "Veil.Services\Veil.Services.csproj", "{F792D07E-9D28-40E7-97C0-B81014831E8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{583D5336-940C-4467-86CA-CDF93E93792A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{583D5336-940C-4467-86CA-CDF93E93792A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{583D5336-940C-4467-86CA-CDF93E93792A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
