@@ -31,7 +31,6 @@ const getCoords = async () => {
 
 function setTextBox(type, value) {
     if (type === 'lat') {
-
         let latTextbox = document.getElementById("latitudeText");
         latTextbox.value = value;
     } else if (type === 'long') {

@@ -1,0 +1,64 @@
+﻿@using Allegiance.Blazor.Highcharts.Charts
+@using Allegiance.Blazor.Highcharts.Options
+
+@inject IChartService chartService
+@inject IJSRuntime jsRuntime
+@implements IDisposable
+
+<div id="basicLine"></div>
+
+@code {
+
+    [Parameter]
+    public List<Object> SeriesElement1 { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; } = String.Empty;
+
+    [Parameter]
+    public string? Subtitle { get; set; } = String.Empty;
+    
+
+    [Parameter]
+    public string? YAxisLabel { get; set; } = String.Empty;
+
+    [Parameter]
+    public string? XAxisLabel { get; set; } = String.Empty;
+
+
+    [Parameter]
+    public string? SeriesElement1Label { get; set; } = String.Empty;
+
+    ChartObject? BasicLineGraph = null;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+        BasicLineGraph = new ChartObject()
+            {
+                Series = new List<SeriesElement>()
+              {
+              new SeriesElement(SeriesElement1Label, SeriesElement1),
+              },
+                Title = new Title(Title),
+                Subtitle = new Title(Subtitle),
+                YAxis = new YAxis(
+                      new Title(YAxisLabel)
+                      ),
+                XAxis = new XAxis(new Accessibility(XAxisLabel))
+            };
+
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            chartService.RenderChart("basicLine", BasicLineGraph.Generate());
+        }
+    }
+
+
+    public void Dispose()
+    {
+        BasicLineGraph.DisposeChart(jsRuntime, "basicLine");
+    }
+
+    }

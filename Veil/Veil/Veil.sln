@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veil", "Veil\Veil.csproj", "{583D5336-940C-4467-86CA-CDF93E93792A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veil", "Veil\Veil.csproj", "{583D5336-940C-4467-86CA-CDF93E93792A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyApis", "ThirdPartyApis\ThirdPartyApis.csproj", "{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyApis", "ThirdPartyApis\ThirdPartyApis.csproj", "{8D76EA39-E06D-4EFB-8B0B-F45B5735C0E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veil.Services", "Veil.Services\Veil.Services.csproj", "{F792D07E-9D28-40E7-97C0-B81014831E8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veil.Services", "Veil.Services\Veil.Services.csproj", "{F792D07E-9D28-40E7-97C0-B81014831E8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

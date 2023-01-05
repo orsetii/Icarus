@@ -1,4 +1,4 @@
-﻿# Veil - Van Mangement System
+﻿# Veil - Van Management System
 
 This is the repository containg the code for the VMS of Icarus.
 
@@ -19,7 +19,7 @@ It manages all computing interfaces and capabilities of the entire van, and cent
 
 - CCTV
 - Blogging/Content Creation Platform
-- Finicial Management.
+- Financial Management.
 
 ## Voice Commands
 
