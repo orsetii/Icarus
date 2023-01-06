@@ -1,0 +1,2 @@
+docker volume create openstreetmap-data
+ docker run -e THREADS=12  -e "OSM2PGSQL_EXTRA_ARGS=-C 4096" -v /home/orseti/bangladesh-latest.osm.pbf:/data.osm.pbf -v osm-tiles:/data/tiles/ -v openstreetmap-data:/var/lib/postgresql/12/main overv/openstreetmap-tile-server:1.3.10 import 

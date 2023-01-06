@@ -1,0 +1,35 @@
+﻿@page "/map"
+@using Newtonsoft.Json
+@using ThirdPartyApis
+@inject IJSRuntime JS
+
+
+
+        <MudTextField @bind-Value="Latitude" Label="Standard" Variant="Variant.Text" id="latitudeText"></MudTextField>
+        <MudTextField @bind-Value="Longitude" Label="Standard" Variant="Variant.Text" id="longitudeText"></MudTextField>
+
+
+
+        <MudPaper Elevation="2" Height="80vh">
+            <div id="map">
+            </div>
+        </MudPaper>
+
+@code {
+
+    public double Latitude { get; set; } = 0.0;
+    public double Longitude { get; set; } = 0.0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender) {
+            await LoadMap();
+        }
+    }
+
+    async Task LoadMap()
+    {
+        await JS.InvokeVoidAsync("InitMap");
+    }
+
+}

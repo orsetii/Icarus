@@ -1,32 +1,53 @@
 ﻿async function InitMap() {
 
-    var location = await getCoords();
-    setTextBox('lat', location.lat)
-    setTextBox('long', location.long)
+    var pos = await getCurrentPosition();
 
-
+    setTextBox('lat', pos.coords.latitude);
+    setTextBox('long', pos.coords.longitude);
 
 
     var map = L.map('map', {
-        center: [location.lat, location.long],
+        center: [pos.coords.latitude, pos.coords.longitude],
         zoom: 12
     });
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: ''
-}).addTo(map);
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
 }
 
 
-const getCoords = async () => {
-        const pos = await new Promise((resolve, reject) => {
+const getCurrentPosition = async () => {
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+    let pos = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
+
     
-        return {
-          long: pos.coords.longitude,
-          lat: pos.coords.latitude,
-        };
+
+    console.log('Your current position is:');
+    console.log(`Latitude : ${pos.coords.latitude}`);
+    console.log(`Longitude: ${pos.coords.longitude}`);
+    console.log(`More or less ${pos.coords.accuracy} meters.`);
+
+    return pos;
+
 };
+
+const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+    return err;
+}
 
 
 function setTextBox(type, value) {
