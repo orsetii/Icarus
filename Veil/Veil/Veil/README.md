@@ -13,6 +13,7 @@ It manages all computing interfaces and capabilities of the entire van, and cent
 - Weather
 - Photo and Video Library, sorted, geotagged onto map.
 - Detailed Stock, with location inside Icarus, and steps to get to it.
+- Literature Platform, wikipedia, manuals of important items, fiction, etc.
 
 
 ### Unconfirmed Features

@@ -37,8 +37,8 @@ namespace ThirdPartyApis
         private Dictionary<string, string> GetForecastParameters(double Latitude, double Longitude, DateTime dateFrom, DateTime dateTo)
         {
             var paramDict = new Dictionary<string, string>() { };
-            paramDict.Add("Latitude", Latitude.ToString());
-            paramDict.Add("Longitude", Longitude.ToString());
+            paramDict.Add("latitude", Latitude.ToString());
+            paramDict.Add("longitude", Longitude.ToString());
 
 
             // Note, parameters are added in a comma delimited list for either hourly or daily. Therefore,
@@ -61,11 +61,10 @@ namespace ThirdPartyApis
 
         private static async Task<T> DoCall<T>(ApiCallType callType, Dictionary<string, string> paramDictionary)
         {
-            var url = API_URL + callType.ToString();
+            var url = API_URL + callType.ToString().ToLower();
             var FinalApiURL = new Uri(QueryHelpers.AddQueryString(url, paramDictionary));
 
-            //var response = await client.GetAsync(FinalApiURL.ToString().ToLower());
-            var response = await client.GetAsync("https://api.open-meteo.com/v1/forecast?latitude=50.72&longitude=-1.88&hourly=temperature_2m,relativehumidity_2m,dewpoint_2m,apparent_temperature,precipitation,rain,showers,snowfall,snow_depth,freezinglevel_height,weathercode,surface_pressure,cloudcover,visibility,evapotranspiration,et0_fao_evapotranspiration,windspeed_10m,winddirection_10m,windgusts_10m,soil_temperature_0cm,soil_moisture_0_1cm&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,shortwave_radiation_sum,et0_fao_evapotranspiration&timezone=Europe%2FLondon&start_date=2023-01-05&end_date=2023-01-05");
+            var response = await client.GetAsync(FinalApiURL.ToString());
             var responseBody = await response.Content.ReadAsStringAsync();
 
 

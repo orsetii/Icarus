@@ -9,6 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Shared\Map.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Shared\Map.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\scripts\Maps.js" />
   </ItemGroup>
 
@@ -21,6 +36,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Veil.Services\Veil.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\NewFolder\" />
+    <Folder Include="wwwroot\css\geoman\" />
   </ItemGroup>
 
 </Project>

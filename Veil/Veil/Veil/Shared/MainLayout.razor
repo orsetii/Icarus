@@ -3,17 +3,42 @@
 <PageTitle>Veil</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <MudPaper Height="100vh" Width="100vw" Style="overflow:hidden; position:relative;">
+        <MudDrawerContainer Class="mud-height-full">
+            <MudDrawer @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini">
+                <MudNavMenu>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Href="home">Home</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GridView" Href="dashboard">Dashboard</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Map" Href="map">Map</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WbSunny" Href="weather" >Weather</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ContentPasteSearch" Href="stock" >Stock</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" Href="literature" >Literature</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Speed" Href="telemetry" >Telemetry</MudNavLink>
+                </MudNavMenu>
+                    <div class="bottom-of-sidebar">
+                    <MudToggleIconButton Class="" @bind-Toggled="@TransmissionEnabled"
+                                         Icon="@Icons.Material.Filled.SignalWifiOff"  Color="@Color.Error" Title="Transmission Disabled"
+                                         ToggledIcon="@Icons.Material.Filled.SignalWifi4Bar" ToggledColor="@Color.Success" ToggledTitle="Transmission Enabled" id="TransmissionToggleButton" />
+                        </div>
+            </MudDrawer>
+            <div class="d-flex justify-center align-center mud-height-full px-4">
+                <main class="">
+                    @Body
+                </main>
+            </div>
+        </MudDrawerContainer>
+    </MudPaper>
 </div>
+
+@code
+{
+    bool open = true;
+    bool TransmissionEnabled = false;
+    public bool DataUsageEnabled = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    } 
+}
+

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyApis", "ThirdPart
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veil.Services", "Veil.Services\Veil.Services.csproj", "{F792D07E-9D28-40E7-97C0-B81014831E8C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veil.Data", "Veil.Data\Veil.Data.csproj", "{ED4FCAE9-B46C-42FC-A8F8-42AA87695BFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F792D07E-9D28-40E7-97C0-B81014831E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED4FCAE9-B46C-42FC-A8F8-42AA87695BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED4FCAE9-B46C-42FC-A8F8-42AA87695BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED4FCAE9-B46C-42FC-A8F8-42AA87695BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED4FCAE9-B46C-42FC-A8F8-42AA87695BFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

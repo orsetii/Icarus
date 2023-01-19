@@ -1,4 +1,4 @@
-namespace Veil.Data
+namespace Veil.Data.Weather
 {
     public class WeatherForecast
     {

@@ -1,0 +1,50 @@
+﻿@page "/map"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Newtonsoft.Json
+@using ThirdPartyApis
+@inject IJSRuntime JS
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+
+
+        <MudPaper Elevation="2" Height="95vh" Class="py-2 px-2">
+
+            <MudPaper Elevation="4" Class="px-4 mb-2" Height="10%">
+        <MudGrid>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+            </MudPaper>
+    </MudItem>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+    <MudToolBar>
+        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt" />
+        <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+    </MudToolBar>
+    </MudPaper >
+
+    <Map />
+</MudPaper>
+
+@code {
+}

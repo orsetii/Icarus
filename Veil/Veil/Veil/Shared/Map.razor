@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Newtonsoft.Json
+@using ThirdPartyApis
+@inject IJSRuntime JS
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+
+<MudPaper Elevation="0" Height="@HeightPercentageToString()" Width="100%" Class="py-2 px-2">
+<div id="map"> </div>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public double HeightPercentage { get; set; } = 90.0;
+
+    public static string mapDataJsonFile = Directory.GetParent(Environment.CurrentDirectory).FullName + "/Veil/Data/mapData.json";
+
+    public string GeoJSON 
+    {
+        get {
+            return File.ReadAllText(mapDataJsonFile);
+        }
+
+        set {
+            SaveGeoJSONData(value);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender) {
+            await LoadMap();
+        }
+    }
+
+    async Task LoadMap()
+    {
+        var dotNetReference = DotNetObjectReference.Create(this);
+        await JS.InvokeVoidAsync("InitMap", dotNetReference);
+    }
+
+    [JSInvokable("SaveGeoJSONData")]
+    public void SaveGeoJSONData(string data)
+    {
+        var stream = File.CreateText(mapDataJsonFile);
+        stream.WriteLine(data);
+        stream.Flush();
+        stream.Close();
+    }
+
+    [JSInvokable("GetGeoJSONData")]
+    public string GetGeoJSONData()
+    {
+        return GeoJSON;
+    }
+
+    public string HeightPercentageToString() 
+    {
+        return $"{HeightPercentage.ToString()}%";
+    }
+}

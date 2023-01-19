@@ -1,0 +1,69 @@
+﻿@page "/home"
+
+<PageTitle>Veil | Home</PageTitle>
+
+
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="">
+
+<MudGrid Spacing="4" Justify="Justify.Center" >
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" onclick="location.href='./dashboard';" Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Outlined.GridView" Title="Dashboard" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Dashboard</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" onclick="location.href='./map';" Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Filled.Map" Title="Map" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Map</MudText>
+            </MudPaper>
+    </MudItem>
+        <MudItem md="4" >
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" onclick="location.href='./weather';"  Class="square-link d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Filled.WbSunny" Title="Weather" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Weather</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" onclick="location.href='./stock';"   Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Filled.ContentPasteSearch" Title="Stock" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Stock</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" onclick="location.href='./literature';"  Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Outlined.LibraryBooks" Title="Literature" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Literature</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" onclick="location.href='./telemetry';" Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Outlined.Speed" Title="Telemetry" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Telemetry</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Outlined.Square" Title="Map" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Placeholder</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Outlined.Square" Title="Map" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Placeholder</MudText>
+            </MudPaper>
+    </MudItem>
+    <MudItem md="4">
+            <MudPaper Height="@squareSizePx" Width="@squareSizePx" Class="d-flex flex-column align-center justify-center mud-width-full py-8 square-link">
+                <MudIcon Icon="@Icons.Material.Outlined.Square" Title="Map" Style="font-size: 4rem;" />
+                <MudText Typo="Typo.h6" Align="MudBlazor.Align.Center">Placeholder</MudText>
+            </MudPaper>
+    </MudItem>
+</MudGrid>
+</MudContainer>
+
+@code {
+    public string squareSizePx = "160";
+}
