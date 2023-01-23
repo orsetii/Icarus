@@ -1,6 +1,25 @@
 ﻿@page "/literature"
-<h3>Index</h3>
+@using System.ComponentModel
+@using System.Reflection
+@using Veil.Data.Literature
+
+
+<h3>
+    @article.title
+</h3>
+
+<a>@article.sections[0].paragraphs[0].sentences[0].text</a>
 
 @code {
+
+    WikiService wikiService { get; set; }
+    WikipediaArticle article { get; set; }
+
+    public Index()
+    {
+        wikiService = new WikiService();
+
+        article = wikiService.GetArticleWithTitle("Water");
+    }
 
 }

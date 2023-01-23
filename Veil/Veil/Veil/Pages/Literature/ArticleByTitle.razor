@@ -1,0 +1,38 @@
+﻿@page "/literature/{articleTitle}"
+@using Veil.Data.Literature
+
+@if(article is not null)
+{
+
+<h3>
+    @article.title
+</h3>
+
+<a>@article.sections[0].paragraphs[0].sentences[0].text</a>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public string? articleTitle { get; set; }
+
+    WikiService wikiService { get; set; }
+    WikipediaArticle? article { get; set; }
+
+    public ArticleByTitle()
+    {
+        wikiService = new WikiService();
+
+    }
+    protected override void OnInitialized()
+    {
+
+        if (articleTitle is not null)
+        {
+            article = wikiService.GetArticleWithTitle(articleTitle);
+        }
+        base.OnInitialized();
+    }
+}

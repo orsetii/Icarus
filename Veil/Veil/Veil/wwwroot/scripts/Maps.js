@@ -1,8 +1,16 @@
 ﻿var DotNet;
-async function InitMap(dotnetReference) {
+async function InitMap(dotnetReference, requestedLat, requestedLong) {
     DotNet = dotnetReference;
 
-    var location = await getCurrentPosition();
+    var location = {};
+
+    if (requestedLat != undefined && requestedLong != undefined) {
+        location.lat = requestedLat;
+        location.long = requestedLong;
+    } else {
+        location = await getCurrentPosition();
+    }
+
 
 
     var map = L.map('map', {
@@ -42,6 +50,20 @@ async function InitMap(dotnetReference) {
                     saveToDb(btn, map);
                 },
                 extraHTML: 'bob'
+            }
+        ]
+    }).addTo(map);
+
+
+    L.easyButton({
+        states: [
+            {
+                id: 'curLoc',
+                icon: 'fa-home',
+                title: 'Go to Current Location',
+                onClick: function (btn, map) {
+                    backToCurrentLocation()
+                },
             }
         ]
     }).addTo(map);
@@ -208,6 +230,10 @@ async function GetGeoJsonData() {
 function InitMapFollowMouse(map) {
     // follow mouse
     // ------------------------------
+
+    // delete old follow mouses (shouldnt happen but does, cant hurt!)
+    clearFollowMouseDivs();
+
     const followMouse = document.createElement("div");
     followMouse.className = "follow-mouse";
     document.body.appendChild(followMouse);
@@ -258,3 +284,6 @@ function clickSaveButton() {
 
 // ------------------------------------------
 
+function clearFollowMouseDivs() {
+    document.querySelectorAll('.follow-mouse').forEach(e => e.remove());
+}

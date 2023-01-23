@@ -72,5 +72,16 @@ main {
 .bottom-of-sidebar {
     position: absolute;
     bottom: 0;
-    margin-left: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.clock-sidebar-container {
+text-align: center;
+border: 3px solid dimgray;
+border-radius: 3px;
+margin: 12px;
+font-size: 2rem;
+font-family: 'Cascadia Code';
+
 }

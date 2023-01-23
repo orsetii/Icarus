@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@inject GlobalStateService gss
+@inject NavigationManager nm
 
 <PageTitle>Veil</PageTitle>
 
@@ -7,7 +9,7 @@
         <MudDrawerContainer Class="mud-height-full">
             <MudDrawer @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini">
                 <MudNavMenu>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Href="home">Home</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Href="/">Home</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GridView" Href="dashboard">Dashboard</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Map" Href="map">Map</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WbSunny" Href="weather" >Weather</MudNavLink>
@@ -16,6 +18,9 @@
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Speed" Href="telemetry" >Telemetry</MudNavLink>
                 </MudNavMenu>
                     <div class="bottom-of-sidebar">
+                <div class="clock-sidebar-container">
+                    @(DateTime.Now.ToLongTimeString())
+                </div>
                     <MudToggleIconButton Class="" @bind-Toggled="@TransmissionEnabled"
                                          Icon="@Icons.Material.Filled.SignalWifiOff"  Color="@Color.Error" Title="Transmission Disabled"
                                          ToggledIcon="@Icons.Material.Filled.SignalWifi4Bar" ToggledColor="@Color.Success" ToggledTitle="Transmission Enabled" id="TransmissionToggleButton" />
@@ -33,8 +38,29 @@
 @code
 {
     bool open = true;
-    bool TransmissionEnabled = false;
-    public bool DataUsageEnabled = false;
+    bool TransmissionEnabled 
+    {
+        get { return gss.IsTransmissionEnabled; }
+        set {
+            gss.IsTransmissionEnabled = value;
+            nm.NavigateTo(nm.Uri, forceLoad: true);
+        }
+    }
+        
+        
+        public bool DataUsageEnabled = false;
+
+    System.Threading.Timer timer;
+
+protected override void OnInitialized()
+{
+    timer = new System.Threading.Timer(async _ =>  // async void
+    {
+        // we need StateHasChanged() because this is an async void handler
+        // we need to Invoke it because we could be on the wrong Thread          
+        await InvokeAsync(StateHasChanged);
+    }, null, 0, 1000);
+}
 
     void ToggleDrawer()
     {

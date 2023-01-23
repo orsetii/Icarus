@@ -6,7 +6,6 @@
 @implements IDisposable
 
 <div id="basicLine"></div>
-
 @code {
 
     [Parameter]
@@ -101,4 +100,10 @@
         }
     }
 
+    private bool isVisible;
+
+    public void ToggleOverlay(bool value)
+    {
+        isVisible = value;
     }
+}

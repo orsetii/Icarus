@@ -16,10 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Stock\stock-group-by_example.txt" />
     <None Remove="Shared\Map.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Pages\Stock\stock-group-by_example.txt" />
     <Content Include="Shared\Map.razor.css" />
   </ItemGroup>
 

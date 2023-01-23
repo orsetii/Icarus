@@ -1,6 +1,25 @@
 ﻿@page "/stock"
-<h3>Index</h3>
+@using Veil.Data.Stock
+
+<MudDataGrid Items="@StockItems">
+    <Columns>
+        <Column T="StockItem" Field="Name" />
+    </Columns>
+</MudDataGrid>
 
 @code {
+    private IEnumerable<StockItem> StockItems { get; set; }
 
+    private StockService StockService { get; set; }
+
+    public Index()
+    {
+        StockService = new StockService(); 
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        StockItems = StockService.GetStockItems();
+    }
 }
+

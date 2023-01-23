@@ -11,6 +11,7 @@
     padding: 10px;
     font-weight: 700;
     background-color: #fff;
+    pointer-events: none;
 }
 
 .back-to-home {

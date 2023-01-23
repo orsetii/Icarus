@@ -4,10 +4,15 @@
 @using Veil.Data.Weather
 @using Veil.Services
 @inject IJSRuntime JS
+@inject GlobalStateService gss
+@inject ISnackbar Snackbar
 
 <PageTitle>Veil | Weather</PageTitle>
 
 
+
+
+@if (gss.IsTransmissionEnabled) {
 
         @if (weatherService != null && weatherService.ForecastResult != null)
         {
@@ -25,37 +30,31 @@
         ></WeatherChart>
         }
 
+}
 
         <MudGrid>
-    <MudItem xs="12">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-            
-        </MudPaper>
-    </MudItem>
     <MudItem xs="6">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+        <MudPaper Height="45vh" Class="d-flex align-center justify-center mud-width-full py-8">
+            @if (showMap)
+            {
+            <Map RequestedLatitude="10.0" RequestedLongitude="15.0"  HeightPercentage="110"/> 
+            } else {
+                <MudButton OnClick="ToggleMap" Color="Color.Primary" Variant="Variant.Filled">Show Weather Location</MudButton>
+            }
         </MudPaper>
     </MudItem>
+
     <MudItem xs="6">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=6</MudPaper>
     </MudItem>
-    <MudItem xs="3">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
-    </MudItem>
-    <MudItem xs="3">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
-    </MudItem>
-    <MudItem xs="3">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
-    </MudItem>
 </MudGrid>
-
 
 
 @code {
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public WeatherService weatherService { get; set; }
+    public bool showMap { get; set; } = false;
 
     public string TempuratureChartLabel { get; set; } = String.Empty;
 
@@ -63,16 +62,44 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        Latitude = await Util.Geolocation.GetLatitude(JS);
-        Longitude = await Util.Geolocation.GetLongitude(JS);
-        weatherService = new WeatherService(Latitude, Longitude);
+        if(gss.IsTransmissionEnabled) 
+            await InitializeWeatherChart();
+        else 
+            Snackbar.Add("Transmission is disabled. Please re-enable to retreive updated weather stats. Now displaying most recent weather for your location, retreieved at TODO time.", Severity.Error);
+    }
 
-        TempuratureChartLabel = $"Tempurature °C ({Latitude}, {Longitude})";
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        if(!firstRender) {
+            if(gss.IsTransmissionEnabled)
+            {
+                await InitializeWeatherChart();
+            }
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void ToggleMap()
+    {
+            showMap = !showMap;
+    }
+
+    // TODO make this work for multiple charts
+    public async Task InitializeWeatherChart() 
+    {
+            Latitude = await Util.Geolocation.GetLatitude(JS);
+            Longitude = await Util.Geolocation.GetLongitude(JS);
+            weatherService = new WeatherService(Latitude, Longitude);
+
+            TempuratureChartLabel = $"Tempurature °C ({Latitude}, {Longitude})";
 
             foreach (WeatherCode o in weatherService.HourlyWeatherCodes)
             {
-            Console.WriteLine(o.Description);
+                Console.WriteLine(o.Description);
             }
+
 
     }
 }

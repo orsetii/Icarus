@@ -13,6 +13,12 @@
     [Parameter]
     public double HeightPercentage { get; set; } = 90.0;
 
+    [Parameter]
+    public double? RequestedLatitude { get; set; }
+
+    [Parameter]
+    public double? RequestedLongitude { get; set; }
+
     public static string mapDataJsonFile = Directory.GetParent(Environment.CurrentDirectory).FullName + "/Veil/Data/mapData.json";
 
     public string GeoJSON 
@@ -36,7 +42,7 @@
     async Task LoadMap()
     {
         var dotNetReference = DotNetObjectReference.Create(this);
-        await JS.InvokeVoidAsync("InitMap", dotNetReference);
+        await JS.InvokeVoidAsync("InitMap", new object[] {dotNetReference, RequestedLatitude, RequestedLongitude});
     }
 
     [JSInvokable("SaveGeoJSONData")]

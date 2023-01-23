@@ -27,3 +27,14 @@ It manages all computing interfaces and capabilities of the entire van, and cent
 This will be likely using mycroft (https://github.com/MycroftAI/mycroft-core#using-mycroft) and cannot be built into a browser,
 so we will have to seperately intergrate this. Will need a linux machine, and then build up an enviroment for it to run in.
 
+
+## Links
+
+- https://github.com/AdrienTorris/awesome-blazor
+- https://github.com/bUnit-dev/bUnit
+- https://github.com/ormesam/blazor-typewriter
+- https://github.com/Morasiu/BlazorTimeline
+- https://github.com/excubo-ag/Blazor.ScriptInjection
+- https://github.com/tresoneur/SpotifyService
+- https://github.com/blazority/support
+- https://github.com/LayTec-AG/Plotly.Blazor
