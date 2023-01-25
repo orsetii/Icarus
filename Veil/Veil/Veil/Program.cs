@@ -4,6 +4,9 @@ using MudBlazor.Services;
 using Allegiance.Blazor.Highcharts.Services;
 using Veil.Services;
 using MudBlazor;
+using Veil.Services.Database;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,15 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.ShowTransitionDuration = 500;
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
+
+// TODO grab connection string properly.
+builder.Services.AddDbContextFactory<VeilContext>(options => {
+    options.UseNpgsql("host=localhost;port=5432;database=veil;user id=postgres;password=postgres");
+    
+    
+    }
+
+);
 
 var app = builder.Build();
 

@@ -1,5 +1,7 @@
-﻿@page "/literature/{articleTitle}"
-@using Veil.Data.Literature
+﻿@using Veil.Data.Literature
+
+
+<MudOverlay Visible="true" LightBackground="true">
 
 @if(article is not null)
 {
@@ -9,9 +11,9 @@
 </h3>
 
 <a>@article.sections[0].paragraphs[0].sentences[0].text</a>
-}
+} 
 
-
+</MudOverlay>
 
 @code {
 

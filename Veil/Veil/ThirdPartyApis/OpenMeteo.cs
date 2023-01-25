@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace ThirdPartyApis
@@ -81,6 +82,8 @@ namespace ThirdPartyApis
     }
         public class ForecastResult
         {
+            [Key]
+            public int Id { get; set; }
             public Daily daily { get; set; }
             public DailyUnits daily_units { get; set; }
             public double elevation { get; set; }
@@ -92,10 +95,13 @@ namespace ThirdPartyApis
             public string timezone { get; set; }
             public string timezone_abbreviation { get; set; }
             public int utc_offset_seconds { get; set; }
+        public DateTime dt_retreived { get; set; } = DateTime.Now;
         }
 
         public class Daily
         {
+        [Key]
+        public int Id { get; set; }
             public List<double> apparent_temperature_max { get; set; }
             public List<double> apparent_temperature_min { get; set; }
             public List<double> et0_fao_evapotranspiration { get; set; }
@@ -118,6 +124,8 @@ namespace ThirdPartyApis
 
         public class DailyUnits
         {
+        [Key]
+        public int Id { get; set; }
             public string apparent_temperature_max { get; set; }
             public string apparent_temperature_min { get; set; }
             public string et0_fao_evapotranspiration { get; set; }
@@ -140,6 +148,8 @@ namespace ThirdPartyApis
 
         public class Hourly
         {
+        [Key]
+        public int Id { get; set; }
             public List<double> apparent_temperature { get; set; }
             public List<int> cloudcover { get; set; }
             public List<double> dewpoint_2m { get; set; }
@@ -166,6 +176,8 @@ namespace ThirdPartyApis
 
         public class HourlyUnits
         {
+        [Key]
+        public int Id { get; set; }
             public string apparent_temperature { get; set; }
             public string cloudcover { get; set; }
             public string dewpoint_2m { get; set; }

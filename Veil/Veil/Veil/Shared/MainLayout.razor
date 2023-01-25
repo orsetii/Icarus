@@ -7,7 +7,7 @@
 <div class="page">
     <MudPaper Height="100vh" Width="100vw" Style="overflow:hidden; position:relative;">
         <MudDrawerContainer Class="mud-height-full">
-            <MudDrawer @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini">
+            <MudDrawer @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
                 <MudNavMenu>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Href="/">Home</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GridView" Href="dashboard">Dashboard</MudNavLink>
@@ -18,9 +18,11 @@
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Speed" Href="telemetry" >Telemetry</MudNavLink>
                 </MudNavMenu>
                     <div class="bottom-of-sidebar">
+                        @if(open) {
                 <div class="clock-sidebar-container">
                     @(DateTime.Now.ToLongTimeString())
                 </div>
+                        }
                     <MudToggleIconButton Class="" @bind-Toggled="@TransmissionEnabled"
                                          Icon="@Icons.Material.Filled.SignalWifiOff"  Color="@Color.Error" Title="Transmission Disabled"
                                          ToggledIcon="@Icons.Material.Filled.SignalWifi4Bar" ToggledColor="@Color.Success" ToggledTitle="Transmission Enabled" id="TransmissionToggleButton" />
@@ -37,7 +39,7 @@
 
 @code
 {
-    bool open = true;
+    bool open = false;
     bool TransmissionEnabled 
     {
         get { return gss.IsTransmissionEnabled; }

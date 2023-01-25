@@ -1,10 +1,12 @@
 ﻿using ThirdPartyApis;
 using Veil.Data.Weather;
+using Veil.Services.Database;
 
 namespace Veil.Services
 {
     public class WeatherService
     {
+        public VeilContext dbContext { get; set; }
 
         public ForecastResult ForecastResult { get; set; }
         public List<WeatherCode>? DailyWeatherCodes { get; set; }
@@ -12,12 +14,23 @@ namespace Veil.Services
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public WeatherService(double latitude, double longitude)
+
+        public WeatherService(VeilContext _dbContext, double latitude, double longitude)
         {
+
+            dbContext = _dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
             Latitude = latitude;
             Longitude = longitude;
-            Task.Run(GetTodaysWeather).Wait();
+
+        }
+
+        public async Task<ForecastResult> GetTodaysWeatherAsync()
+        {
+            // TODO check if we recently checked for weather in this (or very close area) recently, if so,
+            // do not resend request for update.
+            var api = new OpenMeteo();
+            ForecastResult = await api.GetForecast(Latitude, Longitude, DateTime.Today, DateTime.Today);
 
             if(ForecastResult is null)
             {
@@ -29,14 +42,14 @@ namespace Veil.Services
             DailyWeatherCodes = ConvertNumericalWeatherCodeListIntoUsable(ForecastResult.daily.weathercode);
             HourlyWeatherCodes = ConvertNumericalWeatherCodeListIntoUsable(ForecastResult.hourly.weathercode);
 
+            return ForecastResult;
         }
 
-        public async Task GetTodaysWeather()
+        public ForecastResult GetTodaysWeather()
         {
-            // TODO check if we recently checked for weather in this (or very close area) recently, if so,
-            // do not resend request for update.
-            var api = new OpenMeteo();
-            ForecastResult = await api.GetForecast(Latitude, Longitude, DateTime.Today, DateTime.Today);
+            var ret = Task.Run(GetTodaysWeatherAsync);
+            ret.Wait();
+            return ret.Result;
         }
 
         // TODO, need to attach the timestamp of each weathercode into the class ctor
@@ -46,6 +59,21 @@ namespace Veil.Services
             numericalCodeList.ForEach((x) => FullWeatherCodeList.Add(new WeatherCode(x)));
             return FullWeatherCodeList; 
         }
+
+        public async Task SaveLatestWeatherAsync()
+        {
+            dbContext.WeatherForecasts.Add(ForecastResult);
+            await dbContext.SaveChangesAsync();
+            
+        }
+
+        public async void SaveLatestWeather()
+        {
+            dbContext.WeatherForecasts.Add(ForecastResult);
+            dbContext.SaveChanges();
+            
+        }
+
 
     }
 }

@@ -1,10 +1,14 @@
-﻿namespace Veil.Data.Geolocation
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Veil.Data.Geolocation
 {
     /// <summary>
     /// Geolocation Coordinates, based on <see href="https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates"/>.
     /// </summary>
     public class GeolocationCoordinates
     {
+        [Key]
+        public int Id { get; set; }
         /// <summary>
         /// Latitude in decimal degrees.
         /// </summary>

@@ -1,11 +1,12 @@
 ﻿@page "/weather"
+@using Microsoft.EntityFrameworkCore
 @using Newtonsoft.Json
 @using ThirdPartyApis
 @using Veil.Data.Weather
-@using Veil.Services
 @inject IJSRuntime JS
 @inject GlobalStateService gss
 @inject ISnackbar Snackbar
+@inject IDbContextFactory<VeilContext> dbFactory
 
 <PageTitle>Veil | Weather</PageTitle>
 
@@ -89,18 +90,28 @@
     // TODO make this work for multiple charts
     public async Task InitializeWeatherChart() 
     {
+            var ctx = dbFactory.CreateDbContext();
             Latitude = await Util.Geolocation.GetLatitude(JS);
             Longitude = await Util.Geolocation.GetLongitude(JS);
-            weatherService = new WeatherService(Latitude, Longitude);
+            weatherService = new WeatherService(ctx, Latitude, Longitude);
+            await weatherService.GetTodaysWeatherAsync();
 
             TempuratureChartLabel = $"Tempurature °C ({Latitude}, {Longitude})";
 
-            foreach (WeatherCode o in weatherService.HourlyWeatherCodes)
-            {
-                Console.WriteLine(o.Description);
-            }
+            await weatherService.SaveLatestWeatherAsync();
+            weatherService.SaveLatestWeather();
+
+            var mostRecentForecast = GetMostRecentForecast(ctx);
 
 
+    }
+
+    public ForecastResult GetMostRecentForecast(VeilContext ctx)
+    {
+
+            var mostRecentForecast = ctx.WeatherForecasts.OrderByDescending(x => x.dt_retreived).First();
+
+            return mostRecentForecast;
     }
 }
 

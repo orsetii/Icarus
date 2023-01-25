@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Veil.Data.Geolocation
 {
@@ -8,6 +9,9 @@ namespace Veil.Data.Geolocation
     /// </summary>
     public class GeolocationPosition
     {
+
+        [Key]
+        public int Id { get; set; }
         /// <summary>
         /// The coordinates defining the current location
         /// </summary>

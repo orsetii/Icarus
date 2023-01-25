@@ -5,6 +5,15 @@
 - Edit the tempuratures on tempurartures graph to have the time in HH:mm format.
 - TESTING!!
 
+## New Modules
+
+- Route Planning
+- Live and historical telemetry
+- Photo and Video Library, geotagged.
+- CCTV
+- Voice Commands
+- Financial
+
 
 ## Weather
 - Weather use the location on the most recent data, and show those coords on the map. 

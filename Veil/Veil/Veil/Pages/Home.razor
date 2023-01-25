@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using Veil.Services.Database
+@inject VeilContext ctx
 
 <PageTitle>Veil | Home</PageTitle>
 
@@ -66,4 +68,11 @@
 
 @code {
     public string squareSizePx = "160";
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+
+        base.OnAfterRender(firstRender);
+    }
 }
