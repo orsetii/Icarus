@@ -17,7 +17,7 @@ heater, tv, full bed, etc, etc.
 
 Then I am not beginning a new life. 
 
-I am transplanting my life, of a privleged, middle class person in the 6th richest country in 
+I am transplanting my life, of a privileged, middle class person in the 6th richest country in 
 the world, and putting it into a new vessel, now a moving one than a stationary one. I least 
 I would own this one though :)
 
