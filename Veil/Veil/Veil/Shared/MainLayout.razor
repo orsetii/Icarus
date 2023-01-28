@@ -1,21 +1,52 @@
 ﻿@inherits LayoutComponentBase
 @inject GlobalStateService gss
 @inject NavigationManager nm
+@inject IJSRuntime JS
 
 <PageTitle>Veil</PageTitle>
 
 <div class="page">
     <MudPaper Height="100vh" Width="100vw" Style="overflow:hidden; position:relative;">
         <MudDrawerContainer Class="mud-height-full">
-            <MudDrawer @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
-                <MudNavMenu>
+            <MudDrawer @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true"> 
+                <MudNavMenu Rounded="true">
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Href="/">Home</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GridView" Href="dashboard">Dashboard</MudNavLink>
+                    <MudNavLink Disabled></MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Map" Href="map">Map</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WbSunny" Href="weather" >Weather</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ContentPasteSearch" Href="stock" >Stock</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" Href="literature" >Literature</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Speed" Href="telemetry" >Telemetry</MudNavLink>
+                    <MudNavLink Disabled></MudNavLink>
+                    <MudNavGroup Title="Finance" Icon="@Icons.Material.Filled.Euro" HideExpandIcon="@(!open)">
+                        <MudNavLink Href="finance" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Balance">Home</MudNavLink>
+                        <MudNavLink Href="finance/sheet" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.InsertChartOutlined">Expense & Income Sheet</MudNavLink>
+                        <MudNavLink Href="finance/budget" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PieChart">Budget</MudNavLink>
+                        <MudNavLink Href="finance/projections" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AutoGraph">Projections</MudNavLink>
+                        <MudNavLink Href="finance/energy" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LocalGasStation">Energy and Fuel</MudNavLink>
+                    </MudNavGroup>
+
+                    <MudNavGroup Title="Van" Icon="@Icons.Material.Filled.DirectionsCar" HideExpandIcon="@(!open)">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ContentPasteSearch" Href="van/stock" >Stock</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Speed" Href="van/telemetry" >Telemetry</MudNavLink>
+                    </MudNavGroup>
+
+                    <MudNavGroup Title="Literature" Icon="@Icons.Material.Filled.LibraryBooks" HideExpandIcon="@(!open)">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Href="/literature" >Home</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ChromeReaderMode" Href="/literature/wikipedia" >Wikipedia</MudNavLink>
+                    </MudNavGroup>
+
+                    <MudNavGroup Title="Media" Icon="@Icons.Material.Filled.Camera" HideExpandIcon="@(!open)">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PhotoLibrary" Href="media" >Library</MudNavLink>
+                    </MudNavGroup>
+
+                    <MudNavGroup Title="Security" Icon="@Icons.Material.Filled.Shield" HideExpandIcon="@(!open)">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Analytics" Href="/security/" >Security Dashboard</MudNavLink>
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CameraIndoor" Href="/security/cctv" >CCTV</MudNavLink>
+                    </MudNavGroup>
+
+                    <MudNavGroup Title="Settings" Icon="@Icons.Material.Filled.Settings" HideExpandIcon="@(!open)" Class="mt-5">
+                        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lens" Href="/settings/" >TODO</MudNavLink>
+                    </MudNavGroup>
+
                 </MudNavMenu>
                     <div class="bottom-of-sidebar">
                         @if(open) {
@@ -28,14 +59,15 @@
                                          ToggledIcon="@Icons.Material.Filled.SignalWifi4Bar" ToggledColor="@Color.Success" ToggledTitle="Transmission Enabled" id="TransmissionToggleButton" />
                         </div>
             </MudDrawer>
-            <div class="d-flex justify-center align-center mud-height-full px-4">
-                <main class="">
+            <div class="d-flex justify-center align-center mud-height-full px-4 overflow-hidden">
+                <main class="overflow-hidden">
                     @Body
                 </main>
             </div>
         </MudDrawerContainer>
     </MudPaper>
 </div>
+
 
 @code
 {
@@ -48,21 +80,28 @@
             nm.NavigateTo(nm.Uri, forceLoad: true);
         }
     }
-        
-        
-        public bool DataUsageEnabled = false;
+
+
+    public bool DataUsageEnabled = false;
 
     System.Threading.Timer timer;
 
-protected override void OnInitialized()
-{
-    timer = new System.Threading.Timer(async _ =>  // async void
+    protected override void OnInitialized()
     {
-        // we need StateHasChanged() because this is an async void handler
-        // we need to Invoke it because we could be on the wrong Thread          
-        await InvokeAsync(StateHasChanged);
-    }, null, 0, 1000);
-}
+        timer = new System.Threading.Timer(async _ =>  // async void
+        {
+            // we need StateHasChanged() because this is an async void handler
+            // we need to Invoke it because we could be on the wrong Thread          
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 1000);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JS.InvokeVoidAsync("clearFollowMouseDivs");
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
 
     void ToggleDrawer()
     {

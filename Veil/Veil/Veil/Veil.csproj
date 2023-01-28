@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\Stock\stock-group-by_example.txt" />
+    <None Remove="Pages\Van\Stock\stock-group-by_example.txt" />
     <None Remove="Shared\Map.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Pages\Stock\stock-group-by_example.txt" />
+    <Content Include="Pages\Van\Stock\stock-group-by_example.txt" />
     <Content Include="Shared\Map.razor.css" />
   </ItemGroup>
 
@@ -30,8 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Allegiance.Blazor.Highcharts" Version="2.0.26" />
-    <PackageReference Include="Highsoft.Highcharts" Version="10.2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -13,7 +13,7 @@ namespace Veil.Services
 
         public GlobalStateService()
         {
-            IsTransmissionEnabled = false;
+            IsTransmissionEnabled = true;
             DarkMode = true;
         }
     }

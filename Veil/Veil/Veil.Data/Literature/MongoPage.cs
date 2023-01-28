@@ -150,6 +150,7 @@ namespace Veil.Data.Literature
         public string text { get; set; }
         public List<BsonDocument> links { get; set; }
         public BsonDocument formatting { get; set; }
+        public string number { get; set; }
     }
 
     public class Template

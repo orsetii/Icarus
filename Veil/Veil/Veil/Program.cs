@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
-using Allegiance.Blazor.Highcharts.Services;
 using Veil.Services;
 using MudBlazor;
 using Veil.Services.Database;
@@ -11,7 +10,6 @@ using System.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IChartService, ChartService>();
 builder.Services.AddSingleton<GlobalStateService>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -30,7 +28,7 @@ builder.Services.AddMudServices(config =>
 
 // TODO grab connection string properly.
 builder.Services.AddDbContextFactory<VeilContext>(options => {
-    options.UseNpgsql("host=localhost;port=5432;database=veil;user id=postgres;password=postgres");
+    options.UseNpgsql("host=localhost;port=5432;database=veil;user id=postgres;password=postgres;  Include Error Detail=true");
     
     
     }

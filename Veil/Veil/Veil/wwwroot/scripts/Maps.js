@@ -71,7 +71,7 @@ async function InitMap(dotnetReference, requestedLat, requestedLong) {
     var vanIcon = L.icon({
         iconUrl: 'images/van-marker.png',
 
-        iconSize: [42, 34], // size of the icon
+        iconSize: [32, 24], // size of the icon
         shadowSize: [50, 64], // size of the shadow
         iconAnchor: [21, 17], // point of the icon which will correspond to marker's location
         shadowAnchor: [4, 62],  // the same for the shadow
@@ -240,28 +240,37 @@ function InitMapFollowMouse(map) {
 
     const mapCointainer = document.querySelector("#map");
 
+
     mapCointainer.addEventListener("mousemove", function (e) {
-        const { offsetWidth: mapWidth, offsetHeight: mapHeight } = e.target;
-        const { offsetWidth: cordWidth, offsetHeight: cordHeight } = followMouse;
+        if (isOnMapPage()) {
 
-        // get co-ordinates
-        let { xp, yp } = getCoords(e);
+            const { offsetWidth: mapWidth, offsetHeight: mapHeight } = e.target;
+            const { offsetWidth: cordWidth, offsetHeight: cordHeight } = followMouse;
 
-        // convert point x,y to latlng
-        const point = L.point(xp, yp);
-        const coordinates = map.containerPointToLatLng(point);
+            // get co-ordinates
+            let { xp, yp } = getCoords(e);
 
-        // add coordinates to the div
-        followMouse.textContent = coordinates;
+            // convert point x,y to latlng
+            const point = L.point(xp, yp);
+            const coordinates = map.containerPointToLatLng(point);
 
-        // set the position of the div
-        xp = xp + 20 + cordWidth > mapWidth ? xp - cordWidth - 10 : xp + 10;
-        yp = yp + 20 + cordHeight > mapHeight ? yp - cordHeight - 10 : yp + 10;
+            // add coordinates to the div
+            followMouse.textContent = coordinates;
 
-        // followMouse.style.transform = `translate(${xp}px, ${-yp}px)`;
-        followMouse.style.left = `${xp}px`;
-        followMouse.style.top = `${yp}px`;
+            // set the position of the div
+            xp = xp + 20 + cordWidth > mapWidth ? xp - cordWidth - 10 : xp + 10;
+            yp = yp + 20 + cordHeight > mapHeight ? yp - cordHeight - 10 : yp + 10;
+
+
+
+            followMouse.style.left = `${xp}px`;
+            followMouse.style.top = `${yp}px`;
+        } else {
+            followMouse.remove();
+        }
     });
+
+
 
     function getCoords(e) {
         let mouseX = e.clientX;
@@ -285,5 +294,14 @@ function clickSaveButton() {
 // ------------------------------------------
 
 function clearFollowMouseDivs() {
-    document.querySelectorAll('.follow-mouse').forEach(e => e.remove());
+    if (!isOnMapPage()) {
+        document.querySelectorAll('.follow-mouse').forEach(e => e.remove());
+    }
 }
+
+function isOnMapPage() {
+    const mapCointainer = document.querySelector("#map");
+    return mapCointainer !== null;
+}
+
+window.document.onload = clearFollowMouseDivs();

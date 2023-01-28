@@ -21,7 +21,7 @@ namespace Veil.Services.Database
         }
         public VeilContext() : base() { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql("host=localhost;port=5432;database=veil;user id=postgres;password=postgres");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql("host=localhost;port=5432;database=veil;user id=postgres;password=postgres; Include Error Detail=true");
 
         public DbSet<GeolocationPosition> GeolocationPositions { get; set; }
         public DbSet<StockItem> StockItems { get; set; }

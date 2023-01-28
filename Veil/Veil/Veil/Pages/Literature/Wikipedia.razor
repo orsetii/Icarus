@@ -1,0 +1,53 @@
+﻿@page "/literature/wikipedia"
+
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="overflow-hidden">
+<MudPaper Elevation="2" Class="overflow-hidden" Height="95vh">
+
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" Style="">
+
+<MudTextField @bind-Value="_searchTerm" Placeholder="Search" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search"
+            IconSize="Size.Medium" Class="mt-0 mb-4" Immediate="true" OnAdornmentClick="LoadArticle" OnKeyDown="EnterKeyDown"
+            FullWidth="false" Clearable="true" AdornmentText="Article Title" DisableUnderLine="true" Variant="Variant.Filled"
+
+/>
+        </MudItem>
+
+        <MudItem xs="12">
+    <ArticleByTitle articleTitle="@requestedArticleTitle"  />
+
+        </MudItem>
+    </MudGrid>
+
+
+</MudPaper>
+</MudContainer>
+
+@code {
+    public string _searchTerm { get; set; } = String.Empty;
+    public string requestedArticleTitle { get; set; } = String.Empty;
+    public bool startLoading = false;
+
+    public void LoadArticle()
+    {
+        if(!String.IsNullOrWhiteSpace(_searchTerm))
+        {
+            requestedArticleTitle = _searchTerm;
+            StateHasChanged();
+        }
+    }
+
+    public void EnterKeyDown(KeyboardEventArgs e)
+    {
+        if(e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            LoadArticle();
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

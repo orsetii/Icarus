@@ -1,24 +1,78 @@
 ﻿@using Veil.Data.Literature
 
 
-<MudOverlay Visible="true" LightBackground="true">
 
-@if(article is not null)
+@if (article is not null)
 {
+    @try
+    {
 
+        <MudPaper  Style="overflow: scroll; height: 90vh">
+
+    <h3>
+        @(article.title is null ? $"Unable to retreive title for {article.title}" : article.title)
+    </h3>
+
+    @foreach (Section s in article.sections)
+    {
+        @if (s.paragraphs is not null)
+        {
+
+            @foreach (Paragraph p in s.paragraphs)
+            {
+                @if (p.sentences is not null)
+                {
+                    <p>
+
+                    @foreach (Sentence sentence in p.sentences)
+                    {
+                        @sentence.text
+                        @:&nbsp;
+                    }
+                    </p>
+                }
+            }
+        }
+    }
+        </MudPaper>
+    }
+    catch (Exception)
+    {
+        
+    }
+} else {
+
+    @if(NoArticleFound) {
 <h3>
-    @article.title
+    Unable to find article for <b>'@articleTitle'</b>
 </h3>
+    }
+}
 
-<a>@article.sections[0].paragraphs[0].sentences[0].text</a>
-} 
-
-</MudOverlay>
 
 @code {
-
+    private string _articleTitle = String.Empty;
     [Parameter]
-    public string? articleTitle { get; set; }
+    public string articleTitle {
+        get {
+            return _articleTitle;
+        }
+        set {
+            if (_articleTitle != value && !String.IsNullOrWhiteSpace(value))
+            {
+                _articleTitle = value;
+                GetArticle();
+            }
+            else
+            {
+                _articleTitle = value;
+            }
+        }
+    }
+
+    public string loadedArticleTitle { get; set; } = String.Empty;
+
+    public bool NoArticleFound { get; set;  } = false;
 
     WikiService wikiService { get; set; }
     WikipediaArticle? article { get; set; }
@@ -31,10 +85,40 @@
     protected override void OnInitialized()
     {
 
-        if (articleTitle is not null)
+        if (!String.IsNullOrWhiteSpace(articleTitle))
         {
-            article = wikiService.GetArticleWithTitle(articleTitle);
+            if (article is null)
+            {
+
+                GetArticle();
+            }
+            else
+            {
+
+            }
         }
         base.OnInitialized();
     }
+
+
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void GetArticle()
+    {
+        article = wikiService.GetArticleWithTitle(articleTitle);
+        if(article is not null) {
+            loadedArticleTitle = article.title;
+            NoArticleFound = false;
+        } else {
+            NoArticleFound = true;
+        }
+        StateHasChanged();
+
+    }
+
+
 }

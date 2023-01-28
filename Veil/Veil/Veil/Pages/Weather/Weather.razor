@@ -17,18 +17,6 @@
 
         @if (weatherService != null && weatherService.ForecastResult != null)
         {
-        <WeatherChart             
-            YAxisLabel="Weather at Current Location"
-            XAxisLabel="Time (HH)"
-            SeriesElement1Label="@TempuratureChartLabel"
-            SeriesElement1="weatherService.ForecastResult.hourly.temperature_2m.Cast<object>().ToList()"
-
-            SeriesElement2Label="Apparent Tempurature"
-            SeriesElement2="weatherService.ForecastResult.hourly.apparent_temperature.Cast<object>().ToList()"
-            
-            SeriesElement3Label="Precipation"
-            SeriesElement3="weatherService.ForecastResult.hourly.precipitation.Cast<object>().ToList()"
-        ></WeatherChart>
         }
 
 }
@@ -46,7 +34,9 @@
     </MudItem>
 
     <MudItem xs="6">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=6</MudPaper>
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+
+        </MudPaper>
     </MudItem>
 </MudGrid>
 
@@ -57,16 +47,17 @@
     public WeatherService weatherService { get; set; }
     public bool showMap { get; set; } = false;
 
-    public string TempuratureChartLabel { get; set; } = String.Empty;
 
 
 
     protected override async Task OnParametersSetAsync()
     {
-        if(gss.IsTransmissionEnabled) 
-            await InitializeWeatherChart();
-        else 
+        if(gss.IsTransmissionEnabled) {
+
+        }
+        else {
             Snackbar.Add("Transmission is disabled. Please re-enable to retreive updated weather stats. Now displaying most recent weather for your location, retreieved at TODO time.", Severity.Error);
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -75,7 +66,6 @@
         if(!firstRender) {
             if(gss.IsTransmissionEnabled)
             {
-                await InitializeWeatherChart();
             }
         }
 
@@ -87,24 +77,6 @@
             showMap = !showMap;
     }
 
-    // TODO make this work for multiple charts
-    public async Task InitializeWeatherChart() 
-    {
-            var ctx = dbFactory.CreateDbContext();
-            Latitude = await Util.Geolocation.GetLatitude(JS);
-            Longitude = await Util.Geolocation.GetLongitude(JS);
-            weatherService = new WeatherService(ctx, Latitude, Longitude);
-            await weatherService.GetTodaysWeatherAsync();
-
-            TempuratureChartLabel = $"Tempurature °C ({Latitude}, {Longitude})";
-
-            await weatherService.SaveLatestWeatherAsync();
-            weatherService.SaveLatestWeather();
-
-            var mostRecentForecast = GetMostRecentForecast(ctx);
-
-
-    }
 
     public ForecastResult GetMostRecentForecast(VeilContext ctx)
     {
